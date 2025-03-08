@@ -1,41 +1,53 @@
 tareas = []
 
-print(tareas)
+""" Funciones """
+def agregar_tarea(descripcion):
+    tareas.append({ 'descripcion': descripcion, 'completada': False })
 
-tarea1 = {
-    "description": "tarea 1",
-    "completed": False
-}
+def listar_tareas():
+    for tarea in tareas:
+        print(f"{tarea['descripcion']} {tarea['completada']}")
 
-tarea2 = {
-    "description": "tarea 2",
-    "completed": False
-}
+def completar_tarea(posicion):
+    tareas[posicion]['completada'] = True
 
-""" Agregar tareas """
-print("Agregar")
-tareas.append(tarea1)
-tareas.append(tarea2)
+def eliminar_tarea(posicion):
+    tareas.pop(posicion)
 
-""" Listar tareas """
-print("Listar")
-for tarea in tareas:
-    print(f"{tarea['description']} {tarea['completed']}")
 
-""" Completar tareas """
-print("Completar")
-tareas[1]['completed'] = True
+""" Ejecucion del codigo """
+descripcion = "primera"
 
-""" Listar tareas """
-print("Listar")
-for tarea in tareas:
-    print(f"{tarea['description']} {tarea['completed']}")
+if descripcion == "":
+    print("Debe poner la descripcion")
+else:
+    agregar_tarea(descripcion)
 
-""" Eliminar tareas """
-print("Eliminar")
-tareas.pop(-1)
+if len(tareas) > 0:
+    listar_tareas()
+else:
+    print("No hay tareas aun")
 
-""" Listar tareas """
-print("Listar")
-for tarea in tareas:
-    print(f"{tarea['description']} {tarea['completed']}")
+posicion = 0
+
+if posicion >= 0 and posicion < len(tareas):
+    completar_tarea(posicion)
+else:
+    print("Posición invalida")
+
+if len(tareas) > 0:
+    listar_tareas()
+else:
+    print("No hay tareas aun")
+
+posi = 0
+
+if posi >= 0 and posi < len(tareas):
+    eliminar_tarea(posi)
+else:
+    print("Posición invalida")
+
+if len(tareas) > 0:
+    listar_tareas()
+else:
+    print("No hay tareas aun")
