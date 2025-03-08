@@ -14,14 +14,9 @@ def listar_tareas():
         print("No hay tareas aun")
         return
     
-    for tarea in tareas:
-        estado = ""
-        if tarea['completada']:
-            estado = "✅"
-        else:
-            estado = "❌"
-
-        print(f"{tarea['descripcion']} {estado}")
+    for i, tarea in enumerate(tareas, 1):
+        estado = "✅" if tarea['completada'] else "❌"
+        print(f"{i}. {tarea['descripcion']} {estado}")
 
 def completar_tarea(posicion):
     if 0 < posicion <= len(tareas):
