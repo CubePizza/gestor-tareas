@@ -1,36 +1,38 @@
-tareas = []
+class GestorTareas():
+    def __init__(self):
+        self.tareas = []
 
-""" Funciones """
-def agregar_tarea(descripcion):
-    if not descripcion:
-        print("Debe poner la descripcion")
-        return
-    
-    tareas.append({ 'descripcion': descripcion, 'completada': False })
-    print(f"Tarea '{descripcion}' agregada")
+    def agregar_tarea(self, descripcion):
+        if not descripcion:
+            print("Debe poner la descripcion")
+            return
+        
+        self.tareas.append({ 'descripcion': descripcion, 'completada': False })
+        print(f"Tarea '{descripcion}' agregada")
 
-def listar_tareas():
-    if not tareas:
-        print("No hay tareas aun")
-        return
-    
-    for i, tarea in enumerate(tareas, 1):
-        estado = "✅" if tarea['completada'] else "❌"
-        print(f"{i}. {tarea['descripcion']} {estado}")
+    def listar_tareas(self):
+        if not self.tareas:
+            print("No hay tareas aun")
+            return
+        
+        for i, tarea in enumerate(self.tareas, 1):
+            estado = "✅" if tarea['completada'] else "❌"
+            print(f"{i}. {tarea['descripcion']} {estado}")
 
-def completar_tarea(posicion):
-    if 0 < posicion <= len(tareas):
-        tareas[posicion - 1]['completada'] = True
-    else:
-        print("Posición invalida")
+    def completar_tarea(self, posicion):
+        if 0 < posicion <= len(self.tareas):
+            self.tareas[posicion - 1]['completada'] = True
+            print("Tarea completada")
+        else:
+            print("Posición invalida")
     
+    def eliminar_tarea(self, posicion):
+        if 0 < posicion <= len(self.tareas):
+            self.tareas.pop(posicion - 1)
+            print("Tarea eliminada")
+        else:
+            print("Posición invalida")
 
-def eliminar_tarea(posicion):
-    if 0 < posicion <= len(tareas):
-        tareas.pop(posicion - 1)
-    else:
-        print("Posición invalida")
-    
 
 def escoger_opcion():
     menu = """Gestor de tareas
@@ -45,32 +47,29 @@ Escoger opcion: """
     opcion = int(input(menu))
     return opcion
 
-    
-
-
-
-""" Ejecucion del codigo """
+gestor = GestorTareas()
 while True:
     opcion = escoger_opcion()
 
     if opcion == 5:
         break
-    elif opcion > 0 and opcion < 5:
+    elif 1 <= opcion < 5:
         if opcion == 1:
-            descripcion = input("Descripción de la tarea: ")
-            agregar_tarea(descripcion)
+            tarea = input("Descripción de la tarea: ")
+            gestor.agregar_tarea(tarea)
+            gestor.listar_tareas()
 
         elif opcion == 2:
-            listar_tareas()
+            gestor.listar_tareas()
         
         elif opcion == 3:
             posicion = int(input("Numero de la tarea a completar: "))
-            completar_tarea(posicion)
+            gestor.completar_tarea(posicion)
+            gestor.listar_tareas()
 
-            
-        
-        elif opcion == 4:
+        else:
             posicion = int(input("Numero de la tarea a eliminar: "))
-            eliminar_tarea(posicion)
+            gestor.eliminar_tarea(posicion)
+            gestor.listar_tareas()
     else:
         print("Opcion invalida")
