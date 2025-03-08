@@ -6,7 +6,13 @@ def agregar_tarea(descripcion):
 
 def listar_tareas():
     for tarea in tareas:
-        print(f"{tarea['descripcion']} {tarea['completada']}")
+        estado = ""
+        if tarea['completada']:
+            estado = "✅"
+        else:
+            estado = "❌"
+
+        print(f"{tarea['descripcion']} {estado}")
 
 def completar_tarea(posicion):
     tareas[posicion]['completada'] = True
@@ -53,18 +59,18 @@ while True:
                 print("No hay tareas aun")
         
         elif opcion == 3:
-            posicion = int(input("Numero de la tarea a eliminar: "))
+            posicion = int(input("Numero de la tarea a completar: "))
 
-            if posicion >= 0 and posicion < len(tareas):
-                completar_tarea(posicion)
+            if posicion > 0 and posicion <= len(tareas):
+                completar_tarea(posicion - 1)
             else:
                 print("Posición invalida")
         
         elif opcion == 4:
             posicion = int(input("Numero de la tarea a eliminar: "))
 
-            if posicion >= 0 and posicion < len(tareas):
-                eliminar_tarea(posicion)
+            if posicion > 0 and posicion <= len(tareas):
+                eliminar_tarea(posicion - 1)
             else:
                 print("Posición invalida")
     else:
