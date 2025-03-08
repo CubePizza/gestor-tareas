@@ -1,6 +1,20 @@
+import json
+
 class GestorTareas():
-    def __init__(self):
-        self.tareas = []
+    def __init__(self, archivo="tareas.json"):
+        self.archivo = archivo
+        self.tareas = self.cargar_tareas()
+    
+    def guardar_tareas(self):
+        with open(self.archivo, "w") as f:
+            json.dump(self.tareas, f, indent=4)
+
+    def cargar_tareas(self):
+        try:
+            with open(self.archivo, "r") as f:
+                return json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            return []
 
     def agregar_tarea(self, descripcion):
         if not descripcion:
@@ -8,6 +22,7 @@ class GestorTareas():
             return
         
         self.tareas.append({ 'descripcion': descripcion, 'completada': False })
+        self.guardar_tareas()
         print(f"Tarea '{descripcion}' agregada")
 
     def listar_tareas(self):
@@ -22,14 +37,15 @@ class GestorTareas():
     def completar_tarea(self, posicion):
         if 0 < posicion <= len(self.tareas):
             self.tareas[posicion - 1]['completada'] = True
-            print("Tarea completada")
+            self.guardar_tareas()
+            print(f"Tarea '{self.tareas[posicion - 1]['descripcion']}' completada.")
         else:
             print("Posición invalida")
     
     def eliminar_tarea(self, posicion):
         if 0 < posicion <= len(self.tareas):
-            self.tareas.pop(posicion - 1)
-            print("Tarea eliminada")
+            tarea = self.tareas.pop(posicion - 1)
+            print(f"Tarea '{tarea['descripcion']}' eliminada.")
         else:
             print("Posición invalida")
 

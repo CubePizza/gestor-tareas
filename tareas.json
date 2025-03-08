@@ -1,0 +1,10 @@
+[
+    {
+        "descripcion": "Ir al gym",
+        "completada": false
+    },
+    {
+        "descripcion": "Lavar el ba\u00f1o",
+        "completada": true
+    }
+]
