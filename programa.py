@@ -2,9 +2,18 @@ tareas = []
 
 """ Funciones """
 def agregar_tarea(descripcion):
+    if not descripcion:
+        print("Debe poner la descripcion")
+        return
+    
     tareas.append({ 'descripcion': descripcion, 'completada': False })
+    print(f"Tarea '{descripcion}' agregada")
 
 def listar_tareas():
+    if not tareas:
+        print("No hay tareas aun")
+        return
+    
     for tarea in tareas:
         estado = ""
         if tarea['completada']:
@@ -15,10 +24,18 @@ def listar_tareas():
         print(f"{tarea['descripcion']} {estado}")
 
 def completar_tarea(posicion):
-    tareas[posicion]['completada'] = True
+    if 0 < posicion <= len(tareas):
+        tareas[posicion - 1]['completada'] = True
+    else:
+        print("Posición invalida")
+    
 
 def eliminar_tarea(posicion):
-    tareas.pop(posicion)
+    if 0 < posicion <= len(tareas):
+        tareas.pop(posicion - 1)
+    else:
+        print("Posición invalida")
+    
 
 def escoger_opcion():
     menu = """Gestor de tareas
@@ -46,32 +63,19 @@ while True:
     elif opcion > 0 and opcion < 5:
         if opcion == 1:
             descripcion = input("Descripción de la tarea: ")
-
-            if descripcion == "":
-                print("Debe poner la descripcion")
-            else:
-                agregar_tarea(descripcion)
+            agregar_tarea(descripcion)
 
         elif opcion == 2:
-            if len(tareas) > 0:
-                listar_tareas()
-            else:
-                print("No hay tareas aun")
+            listar_tareas()
         
         elif opcion == 3:
             posicion = int(input("Numero de la tarea a completar: "))
+            completar_tarea(posicion)
 
-            if posicion > 0 and posicion <= len(tareas):
-                completar_tarea(posicion - 1)
-            else:
-                print("Posición invalida")
+            
         
         elif opcion == 4:
             posicion = int(input("Numero de la tarea a eliminar: "))
-
-            if posicion > 0 and posicion <= len(tareas):
-                eliminar_tarea(posicion - 1)
-            else:
-                print("Posición invalida")
+            eliminar_tarea(posicion)
     else:
         print("Opcion invalida")
